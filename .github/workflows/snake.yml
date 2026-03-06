@@ -9,8 +9,12 @@ on:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - uses: Platane/snk@master
         id: snake-gif
@@ -19,20 +23,7 @@ jobs:
           gif_out_path: dist/github-contribution-grid-snake.gif
           svg_out_path: dist/github-contribution-grid-snake.svg
           
-      - name: Push to output branch
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          destination_dir: .
-
-      - name: Push to main branch
-        uses: actions/checkout@v3
-        with:
-          ref: main
-          
-      - name: Copy files
+      - name: Copy files to root
         run: |
           cp dist/github-contribution-grid-snake.svg .
           cp dist/github-contribution-grid-snake.gif .
@@ -41,6 +32,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add .
+          git add github-contribution-grid-snake.svg github-contribution-grid-snake.gif
           git commit -m "Update snake animation" || exit 0
           git push
