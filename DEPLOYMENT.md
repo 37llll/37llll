@@ -98,6 +98,20 @@ gh repo view 37llll/37llll
 gh repo view 37llll/37llll --web
 ```
 
+## 步骤 6.5: ⚠️ 重要！启用个人主页显示
+
+**这是关键步骤！** GitHub 不会自动将仓库 README 显示在个人主页上，需要手动启用：
+
+1. 在浏览器中打开仓库页面：`https://github.com/37llll/37llll`
+2. 在仓库页面右侧找到 **"Share to profile"** 按钮（或类似的提示框）
+3. 点击该按钮，将 README 内容显示在你的个人主页上
+4. 如果没有看到按钮，可以尝试：
+   - 刷新页面
+   - 检查仓库是否为公开（Public）
+   - 确认仓库名与用户名完全一致
+
+完成后，访问 `https://github.com/37llll` 就能看到美化的个人主页了！
+
 ## 步骤 7: 自定义内容（可选）
 
 编辑 `README.md` 文件，然后提交：
