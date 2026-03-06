@@ -1,0 +1,46 @@
+name: Generate Snake Animation
+
+on:
+  schedule:
+    # 每天 UTC 0:00 更新一次
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: Platane/snk@master
+        id: snake-gif
+        with:
+          github_user_name: 37llll
+          gif_out_path: dist/github-contribution-grid-snake.gif
+          svg_out_path: dist/github-contribution-grid-snake.svg
+          
+      - name: Push to output branch
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: .
+
+      - name: Push to main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          
+      - name: Copy files
+        run: |
+          cp dist/github-contribution-grid-snake.svg .
+          cp dist/github-contribution-grid-snake.gif .
+          
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update snake animation" || exit 0
+          git push
